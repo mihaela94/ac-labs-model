@@ -7,8 +7,8 @@ class UserController {
      * @returns {Object} - The user object if found.
      * @throws {Error} - If the user is not found.
      */
-    static getUserById(id) {
-        const user = UserService.getUserById(id);
+    static async getUserById(id) {
+        const user = await UserService.getUserById(id);
         if (!user) {
             throw Error('User not found');
         }
@@ -19,8 +19,8 @@ class UserController {
      * Creates a new user.
      * @param {Object} userModel - The user data to create.
      */
-    static createUser(userModel) {
-        UserService.createUser(userModel);
+    static async createUser(userModel) {
+        await UserService.createUser(userModel);
     }
 
     /**
@@ -30,8 +30,8 @@ class UserController {
      * @returns {Object} - The updated user object.
      * @throws {Error} - If the user is not found.
      */
-    static updateUser(id, userModel) {
-        const updatedUser = UserService.updateUser(id, userModel);
+    static async updateUser(id, userModel) {
+        const updatedUser = await UserService.updateUser(id, userModel);
         if (!updatedUser) {
             throw Error('User not found');
         }
@@ -44,8 +44,8 @@ class UserController {
      * @returns {Object} - The deleted user object.
      * @throws {Error} - If the user is not found.
      */
-    static deleteUser(id) {
-        const deletedUser = UserService.deleteUser(id);
+    static async deleteUser(id) {
+        const deletedUser = await UserService.deleteUser(id);
         if (!deletedUser) {
             throw Error('User not found');
         }

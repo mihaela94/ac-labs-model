@@ -1,8 +1,4 @@
-const bazaDeDate = [
-    { nume: 'Seba', varsta: 10, id: "1" },
-    { nume: 'Seba1', varsta: 101, id: "2" },
-    { nume: 'Seba3', varsta: 103, id: "3" }
-];
+import User from '../models/User.js';
 
 class UserService {
     /**
@@ -10,8 +6,8 @@ class UserService {
      * @param {string} id - The ID of the user to retrieve.
      * @returns {Object|null} - The user object if found, otherwise null.
      */
-    static getUserById(id) {
-        return bazaDeDate.find(user => user.id === id);
+    static async getUserById(id) {
+        return User.findById(id);
     }
 
     /**
@@ -19,7 +15,8 @@ class UserService {
      * @param {Object} userModel - The user object to add.
      */
     static createUser(userModel) {
-        bazaDeDate.push(userModel);
+        const user = new User(userModel);
+        return user.save();
     }
 
     /**
@@ -29,10 +26,7 @@ class UserService {
      * @returns {Object|null} - The updated user object if successful, otherwise null.
      */
     static updateUser(id, userModel) {
-        const userIndex = bazaDeDate.findIndex(user => user.id === id);
-        if (userIndex === -1) return null;
-        bazaDeDate[userIndex] = { ...bazaDeDate[userIndex], ...userModel };
-        return bazaDeDate[userIndex];
+        return User.findByIdAndUpdate(id, userModel, { new: true });
     }
 
     /**
@@ -41,9 +35,8 @@ class UserService {
      * @returns {Object|null} - The deleted user object if successful, otherwise null.
      */
     static deleteUser(id) {
-        const userIndex = bazaDeDate.findIndex(user => user.id === id);
-        if (userIndex === -1) return null;
-        return bazaDeDate.splice(userIndex, 1)[0];
+        return User.findByIdAndDelete(id);
+
     }
 }
 
