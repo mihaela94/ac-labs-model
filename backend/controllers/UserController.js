@@ -20,7 +20,11 @@ class UserController {
      * @param {Object} userModel - The user data to create.
      */
     static async createUser(userModel) {
-        await UserService.createUser(userModel);
+        const user = await UserService.createUser(userModel);
+        if (!user) {
+            throw Error('User not created');
+        }
+        return user;
     }
 
     /**

@@ -8,9 +8,9 @@ const userRouter = express.Router();
  * @route GET /user/:id
  * @param {string} id - The ID of the user to retrieve.
  */
-userRouter.get('/user/:id', (req, res) => {
+userRouter.get('/user/:id', async (req, res) => {
     try {
-        const user = UserController.getUserById(req.params.id);
+        const user = await UserController.getUserById(req.params.id);
         res.status(200).send(user);
     } catch (error) {
         res.status(404).send(error.message);
@@ -22,10 +22,11 @@ userRouter.get('/user/:id', (req, res) => {
  * @route POST /user
  * @param {Object} body - The user data to create.
  */
-userRouter.post('/user', (req, res) => {
+userRouter.post('/user', async (req, res) => {
     try {
-        UserController.createUser(req.body);
-        res.status(201).send('User created successfully');
+        const user = await UserController.createUser(req.body);
+        console.log(JSON.stringify(user));
+        res.status(201).send(`User with id ${user.id} created successfully`);
     } catch (error) {
         res.status(400).send(error.message);
     }
